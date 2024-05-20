@@ -4,7 +4,7 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-        maven("https://jitpack.io")
+        maven(url = "https://jitpack.io")
     }
 }
 
@@ -18,8 +18,6 @@ plugins {
     alias(libs.plugins.android.library) apply false
 //    alias(libs.plugins.android.test) apply false
 //    alias(libs.plugins.android.navigation.safeargs) apply false
-//    alias(libs.plugins.kapt) apply false
     alias(libs.plugins.hilt.android) apply false
     alias(libs.plugins.gms) apply false
-    alias(libs.plugins.firebase.crashlytics) apply false
 }

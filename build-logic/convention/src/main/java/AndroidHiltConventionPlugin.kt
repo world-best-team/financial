@@ -1,0 +1,26 @@
+import org.gradle.api.Plugin
+import org.gradle.api.Project
+import org.gradle.kotlin.dsl.dependencies
+import team.wbt.convention.versionCatalog
+
+class AndroidHiltConventionPlugin : Plugin<Project> {
+
+    override fun apply(target: Project) {
+        with(target) {
+
+            with(pluginManager) {
+                apply("kotlin-kapt")
+                apply("dagger.hilt.android.plugin")
+            }
+
+            val libs = versionCatalog
+
+            dependencies {
+                add("implementation", libs.findLibrary("hilt-android").get())
+                add("implementation", libs.findLibrary("hilt-navigation-compose").get())
+                add("kapt", libs.findLibrary("hilt-compiler").get())
+                add("kapt", libs.findLibrary("hilt-android-compiler").get())
+            }
+        }
+    }
+}
