@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     `kotlin-dsl`
+    `kotlin-dsl-precompiled-script-plugins`
 }
 
 group = "team.wbt.financial.buildlogic"
@@ -20,11 +21,11 @@ tasks.withType<KotlinCompile>().configureEach {
 
 // Dependencies for convention and build-logic
 dependencies {
-    compileOnly(libs.android.gradlePlugin)
-    compileOnly(libs.kotlin.gradlePlugin)
-    compileOnly(libs.ksp.gradlePlugin)
-    compileOnly(libs.room.gradlePlugin)
-    compileOnly(libs.hilt.gradlePlugin)
+    implementation(libs.android.gradlePlugin)
+    implementation(libs.kotlin.gradlePlugin)
+    implementation(libs.ksp.gradlePlugin)
+    implementation(libs.room.gradlePlugin)
+    implementation(libs.hilt.gradlePlugin)
 }
 
 // Custom gradle plugin field
@@ -38,21 +39,5 @@ gradlePlugin {
      * }
      */
     plugins {
-        register("androidApplication") {
-            id = "wbt.android.application"
-            implementationClass = "AndroidApplicationConventionPlugin"
-        }
-        register("androidApplicationCompose") {
-            id = "wbt.android.application.compose"
-            implementationClass = "AndroidApplicationComposeConventionPlugin"
-        }
-        register("androidLibrary") {
-            id = "wbt.android.library"
-            implementationClass = "AndroidLibraryConventionPlugin"
-        }
-        register("androidHilt") {
-            id = "wbt.android.hilt"
-            implementationClass = "AndroidHiltConventionPlugin"
-        }
     }
 }

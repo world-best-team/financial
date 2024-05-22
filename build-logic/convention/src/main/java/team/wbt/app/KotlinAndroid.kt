@@ -1,6 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
-package team.wbt.convention
+package team.wbt.app
 
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
@@ -45,11 +45,11 @@ internal fun Project.configureKotlinAndroid() {
             }
         }
 
-        dependencies {
-            add("coreLibraryDesugaring", libs.findLibrary("android.desugar.jdkLibs").get())
-        }
     }
     configureKotlin()
+    dependencies {
+        add("coreLibraryDesugaring", libs.findLibrary("android.desugar.jdkLibs").get())
+    }
 }
 
 /**

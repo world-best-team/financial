@@ -1,4 +1,4 @@
-package team.wbt.convention
+package team.wbt.app
 
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
@@ -11,6 +11,7 @@ import org.gradle.kotlin.dsl.getByType
 
 internal val Project.applicationExtension: CommonExtension<*, *, *, *, *, *>
     get() = extensions.getByType<ApplicationExtension>()
+
 internal val Project.libraryExtension: CommonExtension<*, *, *, *, *, *>
     get() = extensions.getByType<LibraryExtension>()
 
@@ -19,5 +20,6 @@ internal val Project.androidExtension: CommonExtension<*, *, *, *, *, *>
         .recoverCatching { applicationExtension }
         .onFailure { println("Could not find Library or Application extension from this project") }
         .getOrThrow()
+
 internal val Project.versionCatalog: VersionCatalog
     get() = extensions.getByType<VersionCatalogsExtension>().named("libs")

@@ -44,7 +44,7 @@ room = "2.6.1"
 
 # Hilt
 hilt = "2.49"
-hiltExtension = "1.0.0"
+hiltExtension = "1.2.0"
 
 # Goole & Firebase
 gms = "4.4.0"
@@ -154,6 +154,7 @@ hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.r
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltExtension" }
+hilt-navigation-fragment = { group = "androidx.hilt", name = "hilt-navigation-fragment", version.ref = "hiltExtension"}
 
 # Google & Firebase Libs
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
@@ -247,3 +248,8 @@ gms = { id = "com.google.gms.google-services", version.ref = "gms" }
 
 # Firebase
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics-plugin" }
+
+# Custom Plugins
+wbt-android-application = { id = "wbt.android.application", version = "unspecified" }
+wbt-android-compose = { id = "wbt.android.application.compose", version = "unspecified"}
+wbt-android-library = { id = "wbt.android.library", version = "unspecified" }

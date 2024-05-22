@@ -1,4 +1,4 @@
-package team.wbt.financial.core.data
+package team.wbt.core.model
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("team.wbt.financial.core.data.test", appContext.packageName)
+        assertEquals("team.wbt.core.model.test", appContext.packageName)
     }
 }

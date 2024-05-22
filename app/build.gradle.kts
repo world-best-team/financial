@@ -1,7 +1,6 @@
 plugins {
-    id("wbt.android.application")
-    id("wbt.android.application.compose")
-    id("wbt.android.hilt")
+    alias(libs.plugins.wbt.android.application)
+    alias(libs.plugins.wbt.android.compose)
 }
 
 android {
