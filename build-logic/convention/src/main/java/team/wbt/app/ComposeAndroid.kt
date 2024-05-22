@@ -23,6 +23,7 @@ internal fun Project.configureComposeAndroid() {
             add("implementation", libs.findLibrary("ui.util").get())
             add("implementation", libs.findLibrary("ui.tooling-preview").get())
             add("implementation", libs.findLibrary("ui.graphics").get())
+            add("implementation", libs.findLibrary("coil.compose").get())
 
             add("debugImplementation", libs.findLibrary("ui.tooling").get())
             add("androidTestImplementation", libs.findLibrary("test.ext.junit").get())
@@ -30,6 +31,5 @@ internal fun Project.configureComposeAndroid() {
             add("androidTestImplementation", libs.findLibrary("ui.test.junit4").get())
             add("debugImplementation", libs.findLibrary("ui.test.manifest").get())
         }
-
     }
 }

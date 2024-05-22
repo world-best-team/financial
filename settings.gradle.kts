@@ -21,3 +21,5 @@ rootProject.name = "financial"
 include(":app")
 include(":core:data")
 include(":core:domain")
+include(":core:model")
+include(":core:designsystem")
