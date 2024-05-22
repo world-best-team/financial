@@ -20,3 +20,4 @@ dependencyResolutionManagement {
 rootProject.name = "financial"
 include(":app")
 include(":core:data")
+include(":core:domain")

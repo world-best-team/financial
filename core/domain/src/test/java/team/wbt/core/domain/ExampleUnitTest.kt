@@ -1,4 +1,4 @@
-package team.wbt.financial.core.domain
+package team.wbt.core.domain
 
 import org.junit.Test
 
