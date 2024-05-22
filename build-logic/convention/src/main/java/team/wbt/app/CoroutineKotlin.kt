@@ -7,7 +7,7 @@ internal fun Project.configureCoroutineKotlin() {
     val libs = versionCatalog
 
     dependencies {
-        add("implementation", libs.findLibrary("coroutines.core").get())
-        add("testImplementation", libs.findLibrary("coroutines.test").get())
+        add("implementation", libs.findLibrary("kotlinx.coroutines.core").get())
+        add("testImplementation", libs.findLibrary("kotlinx.coroutines.test").get())
     }
 }

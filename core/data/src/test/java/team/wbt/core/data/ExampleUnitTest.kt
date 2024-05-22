@@ -1,4 +1,4 @@
-package team.wbt.financial.core.data
+package team.wbt.core.data
 
 import org.junit.Test
 

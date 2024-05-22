@@ -8,6 +8,6 @@ internal fun Project.configureCoroutineAndroid() {
 
     val libs = versionCatalog
     dependencies {
-        "implementation"(libs.findLibrary("coroutines.android").get())
+        add("implementation", libs.findLibrary("kotlinx.coroutines.android").get())
     }
 }

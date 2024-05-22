@@ -70,7 +70,6 @@ test-ext-junit = "1.1.5"
 okHttp = "4.12.0"
 retrofit = "2.9.0"
 retrofitKotlinxSerializationJson = "1.0.0"
-gson = "2.10.0"
 
 # Image
 coil = "2.4.0"                              # https://coil-kt.github.io/coil/
@@ -184,7 +183,6 @@ okhttp-core = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "
 okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okHttp" }
 retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-kotlin-serialization = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "retrofitKotlinxSerializationJson" }
-gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 
 # Image Libs
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
@@ -251,5 +249,7 @@ firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "
 
 # Custom Plugins
 wbt-android-application = { id = "wbt.android.application", version = "unspecified" }
-wbt-android-compose = { id = "wbt.android.application.compose", version = "unspecified"}
+wbt-android-compose = { id = "wbt.android.application.compose", version = "unspecified" }
 wbt-android-library = { id = "wbt.android.library", version = "unspecified" }
+wbt-android-hilt = { id = "wbt.android.hilt", version = "unspecified"}
+wbt-kotlin-hilt = { id = "wbt.kotlin.hilt", version = "unspecified" }
