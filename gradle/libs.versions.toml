@@ -153,7 +153,6 @@ hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.r
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltExtension" }
-hilt-navigation-fragment = { group = "androidx.hilt", name = "hilt-navigation-fragment", version.ref = "hiltExtension" }
 
 # Google & Firebase Libs
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
@@ -252,5 +251,6 @@ wbt-android-application = { id = "wbt.android.application", version = "unspecifi
 wbt-android-compose = { id = "wbt.android.compose", version = "unspecified" }
 wbt-android-library = { id = "wbt.android.library", version = "unspecified" }
 wbt-android-hilt = { id = "wbt.android.hilt", version = "unspecified" }
+wbt-android-feature = { id = "wbt.android.feature", version = "unspecified" }
 wbt-kotlin-hilt = { id = "wbt.kotlin.hilt", version = "unspecified" }
 wbt-kotlin-library = { id = "wbt.kotlin.library", version = "unspecified" }

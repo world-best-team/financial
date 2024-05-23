@@ -1,4 +1,4 @@
-package team.wbt.financial.ui.theme
+package team.wbt.core.designsystem.theme
 
 import androidx.compose.ui.graphics.Color
 
