@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.wbt.android.library)
+    alias(libs.plugins.wbt.kotlin.library)
     alias(libs.plugins.wbt.kotlin.hilt)
 }
 
