@@ -24,4 +24,5 @@ android {
 
 dependencies {
     implementation(project(":feature:main"))
+    implementation(libs.timber)
 }

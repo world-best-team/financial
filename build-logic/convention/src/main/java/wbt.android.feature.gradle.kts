@@ -30,4 +30,5 @@ dependencies {
     implementation(libs.findLibrary("hilt.navigation.compose").get())
     implementation(libs.findLibrary("lifecycle.runtime.compose").get())
     implementation(libs.findLibrary("lifecycle.viewmodel.compose").get())
+    implementation(libs.findLibrary("timber").get())
 }
