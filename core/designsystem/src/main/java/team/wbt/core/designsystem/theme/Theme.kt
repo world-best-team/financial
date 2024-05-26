@@ -1,4 +1,4 @@
-package team.wbt.financial.ui.theme
+package team.wbt.core.designsystem.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -33,11 +33,11 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun TeteteTheme(
+fun FinancialTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
