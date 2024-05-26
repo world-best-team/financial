@@ -6,8 +6,8 @@ ktlint = "12.0.3"
 detekt = "1.23.4"
 
 # Kotlin
-kotlin = "1.9.0"
-ksp = "1.9.21-1.0.16"
+kotlin = "2.0.0"
+ksp = "2.0.0-1.0.21"
 kotlinxCoroutine = "1.7.3"                  # https://github.com/Kotlin/kotlinx.coroutines
 kotlinxSerializationJson = "1.6.0"
 kotlinxImmutable = "0.3.5"
@@ -15,41 +15,38 @@ kotlinxDatetime = "0.5.0"
 
 # Android
 desugarJdkLibs = "2.0.4"
-gradle-plugin = "8.4.0"
+gradle-plugin = "8.4.1"
 
 # Android Jetpack - Foundation
-core = "1.12.0"                             # https://developer.android.com/kotlin/ktx#core
+core = "1.13.1"                             # https://developer.android.com/kotlin/ktx#core
 appCompat = "1.6.1"                         # https://developer.android.com/jetpack/androidx/releases/appcompat
-annotation = "1.7.1"                        # https://developer.android.com/jetpack/androidx/releases/annotation
-paging = "3.2.1"                            # https://developer.android.com/jetpack/androidx/releases/paging
+annotation = "1.8.0"                        # https://developer.android.com/jetpack/androidx/releases/annotation
+paging = "3.3.0"                            # https://developer.android.com/jetpack/androidx/releases/paging
 
 # Android Jetpack - Navigation
 composeNavigation = "2.7.7"                 # https://developer.android.com/jetpack/compose/navigation
 
 # Android Jetpack - Architecture
-lifecycle = "2.7.0"                         # https://developer.android.com/jetpack/androidx/releases/lifecycle
+lifecycle = "2.8.0"                         # https://developer.android.com/jetpack/androidx/releases/lifecycle
 
 # Android Jetpack - UI
 coreSplashScreen = "1.0.1"                  # https://developer.android.com/develop/ui/views/launch/splash-screen
-activity = "1.8.2"                          # https://developer.android.com/jetpack/androidx/releases/activity
+activity = "1.9.0"                          # https://developer.android.com/jetpack/androidx/releases/activity
 
 # Android Jetpack - Compose
-compose-bom = "2024.02.00"                  # https://developer.android.com/jetpack/compose/bom
-compose-compiler = "1.5.1"                  # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
-compose-material3 = "1.2.0"                 # https://developer.android.com/jetpack/androidx/releases/compose-material3
+compose-bom = "2024.05.00"                  # https://developer.android.com/jetpack/compose/bom
+compose-material3 = "1.2.1"                 # https://developer.android.com/jetpack/androidx/releases/compose-material3
 
 # Android Jetpack - Data
-datastore = "1.0.0"                         # https://developer.android.com/topic/libraries/architecture/datastore
+datastore = "1.1.1"                         # https://developer.android.com/topic/libraries/architecture/datastore
 room = "2.6.1"
 
 # Hilt
 hilt = "2.49"
 hiltExtension = "1.2.0"
 
-# Goole & Firebase
-gms = "4.4.0"
-firebase-bom = "32.7.2"
-firebase-crashlytics-plugin = "2.9.9"
+# material
+material = "1.12.0"
 
 # Debug
 timber = "5.0.1"
@@ -57,8 +54,6 @@ timber = "5.0.1"
 # Unit Test
 junit = "4.13.2"
 junit-vintage-engine = "5.10.0"
-mockito = "1.10.19"
-mockk = "1.13.5"
 turbine = "1.0.0"                           # https://github.com/cashapp/turbine - Test kotlinx.coroutines Flow
 kotest = "5.8.0"
 
@@ -86,7 +81,6 @@ healthConnect = "1.1.0-alpha07"
 
 # WorkManager
 workManager = "2.9.0"
-material = "1.11.0"
 
 # AppUpdate
 appUpdate = "2.1.0"
@@ -154,13 +148,6 @@ hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref
 hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltExtension" }
 
-# Google & Firebase Libs
-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
-firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
-firebase-messaging-ktx = { group = "com.google.firebase", name = "firebase-messaging-ktx" }
-firebase-remote-config-ktx = { group = "com.google.firebase", name = "firebase-config-ktx" }
-firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
-
 # Debug Libs
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 
@@ -168,8 +155,6 @@ timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "tim
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 junit-vintage-engine = { group = "org.junit.vintage", name = "junit-vintage-engine", version.ref = "junit-vintage-engine" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
-mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
-mockito = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
 kotest-runner = { group = "io.kotest", name = "kotest-runner-junit5", version.ref = "kotest" }
 kotest-assertions = { group = "io.kotest", name = "kotest-assertions-core", version.ref = "kotest" }
 
@@ -233,18 +218,13 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
 # Hilt
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 
 # Room
 room = { id = "androidx.room", version.ref = "room" }
-
-# GMS
-gms = { id = "com.google.gms.google-services", version.ref = "gms" }
-
-# Firebase
-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics-plugin" }
 
 # Custom Plugins
 wbt-android-application = { id = "wbt.android.application", version = "unspecified" }
