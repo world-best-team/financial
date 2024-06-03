@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -24,12 +25,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import team.wbt.feature.main.edit.components.EditTopBar
+import team.wbt.feature.main.edit.model.EditUiModel
 
 @Composable
 fun EditScreen() {
@@ -45,17 +46,19 @@ fun EditScreen() {
             .imePadding()
             .navigationBarsPadding()
     ) { paddingValues ->
-        EditTopDetail(
+        Column(
             modifier = Modifier.padding(paddingValues)
-        )
-        Spacer(modifier = Modifier.height(10.dp))
-
+        ) {
+            EditTopDetail()
+            Spacer(modifier = Modifier.height(10.dp))
+            EditListScreen()
+        }
     }
 }
 
 @Composable
 private fun EditTopDetail(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
@@ -95,5 +98,33 @@ private fun EditTopDetail(
             textDecoration = TextDecoration.Underline,
             color = Color.Gray.copy(alpha = 0.5f)
         )
+    }
+}
+
+@Composable
+private fun EditListScreen(
+    type: EditUiModel = EditUiModel(),
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .background(Color.White)
+            .padding(16.dp)
+    ) {
+        EditItem()
+    }
+}
+
+@Composable
+private fun EditItem(
+    modifier: Modifier = Modifier,
+) {
+    Card(
+        modifier = Modifier
+            .background(color = Color.White)
+    ) {
+
     }
 }
