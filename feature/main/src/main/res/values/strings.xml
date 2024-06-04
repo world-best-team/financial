@@ -12,4 +12,5 @@
     <string name="EDIT_TRANSFER_ACCOUNT">계좌</string>
     <string name="EDIT_DATE">날짜</string>
     <string name="EDIT_MEMO">메모·태그</string>
+    <string name="EDIT_EXCLUDE_BUDGET">예산에서 제외</string>
 </resources>
