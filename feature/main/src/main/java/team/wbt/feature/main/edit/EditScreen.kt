@@ -30,8 +30,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import team.wbt.feature.main.R
-import team.wbt.feature.main.edit.components.CategoryType
-import team.wbt.feature.main.edit.components.EditCategoryCard
+import team.wbt.feature.main.edit.components.EditCategoryButtonList
 import team.wbt.feature.main.edit.components.EditDetailOption
 import team.wbt.feature.main.edit.components.EditItem
 import team.wbt.feature.main.edit.components.EditToggleSwitch
@@ -126,22 +125,9 @@ private fun EditListScreen(
         EditItem(
             title = stringResource(id = R.string.EDIT_TYPE),
             content = {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(10.dp)
-                ) {
-                    EditCategoryCard(
-                        editType = CategoryType.INCOME,
-                        isSelected = editItem.type is Transaction.Income
-                    )
-                    EditCategoryCard(
-                        editType = CategoryType.EXPENSE,
-                        isSelected = editItem.type is Transaction.Expense
-                    )
-                    EditCategoryCard(
-                        editType = CategoryType.TRANSFER,
-                        isSelected = editItem.type is Transaction.Transfer
-                    )
-                }
+                EditCategoryButtonList(
+                    currentType = editItem.type
+                )
             }
         )
         Spacer(
@@ -180,11 +166,9 @@ private fun EditListScreen(
                     is Transaction.Income -> {
                         R.string.EDIT_INCOME_ACCOUNT
                     }
-
                     is Transaction.Expense -> {
                         R.string.EDIT_EXPENSE_ACCOUNT
                     }
-
                     is Transaction.Transfer -> {
                         R.string.EDIT_TRANSFER_ACCOUNT
                     }
