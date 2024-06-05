@@ -5,20 +5,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -42,26 +37,17 @@ import team.wbt.feature.main.edit.model.Transaction
 private val BORDER_SIZE = 1.dp
 
 @Composable
-fun EditScreen() {
-    Scaffold(
-        topBar = {
-            EditTopBar(
-                modifier = Modifier
-            )
-        },
-        modifier = Modifier
-            .fillMaxSize()
-            .systemBarsPadding()
-            .imePadding()
-            .navigationBarsPadding()
-    ) { paddingValues ->
-        Column(
-            modifier = Modifier.padding(paddingValues)
-        ) {
-            EditTopDetail()
-            Spacer(modifier = Modifier.height(10.dp))
-            EditListScreen()
-        }
+internal fun EditScreen(
+    onBackClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier
+    ) {
+        EditTopBar()
+        EditTopDetail()
+        Spacer(modifier = Modifier.height(10.dp))
+        EditListScreen()
     }
 }
 
