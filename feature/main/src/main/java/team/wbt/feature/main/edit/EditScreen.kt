@@ -16,6 +16,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,30 +25,52 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import team.wbt.feature.main.R
 import team.wbt.feature.main.edit.components.EditCategoryButtonList
 import team.wbt.feature.main.edit.components.EditDetailOption
 import team.wbt.feature.main.edit.components.EditItem
 import team.wbt.feature.main.edit.components.EditToggleSwitch
 import team.wbt.feature.main.edit.components.EditTopBar
+import team.wbt.feature.main.edit.model.EditContract
 import team.wbt.feature.main.edit.model.EditUiModel
 import team.wbt.feature.main.edit.model.Transaction
 
 
 private val BORDER_SIZE = 1.dp
+private lateinit var backPressed: () -> Unit
+
+@Composable
+fun EditRoute(
+    onBackClick: () -> Unit,
+) {
+    backPressed = onBackClick
+    EditScreen()
+}
 
 @Composable
 internal fun EditScreen(
-    onBackClick: () -> Unit,
-    modifier: Modifier = Modifier,
+    viewModel: EditViewModel = hiltViewModel(),
 ) {
+    LaunchedEffect(true) {
+        viewModel.effect.collect(::handleSideEffect)
+    }
+
     Column(
-        modifier = modifier
+        modifier = Modifier
     ) {
-        EditTopBar()
+        EditTopBar(onBackClick = { viewModel.setEvent(EditContract.EditEvent.OnBackPressed) })
         EditTopDetail()
         Spacer(modifier = Modifier.height(10.dp))
         EditListScreen()
+    }
+}
+
+private fun handleSideEffect(sideEffect: EditContract.EditSideEffect) {
+    when (sideEffect) {
+        is EditContract.EditSideEffect.NavigateUp -> {
+            (::backPressed.isInitialized).takeIf { it }?.let { backPressed() }
+        }
     }
 }
 
@@ -152,9 +175,11 @@ private fun EditListScreen(
                     is Transaction.Income -> {
                         R.string.EDIT_INCOME_ACCOUNT
                     }
+
                     is Transaction.Expense -> {
                         R.string.EDIT_EXPENSE_ACCOUNT
                     }
+
                     is Transaction.Transfer -> {
                         R.string.EDIT_TRANSFER_ACCOUNT
                     }

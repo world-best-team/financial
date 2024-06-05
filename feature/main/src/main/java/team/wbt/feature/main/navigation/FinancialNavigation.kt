@@ -5,7 +5,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import team.wbt.feature.main.edit.EditScreen
+import team.wbt.feature.main.edit.EditRoute
 
 fun NavGraphBuilder.installHomeScreen(
     onEditClick: () -> Unit
@@ -28,6 +28,6 @@ fun NavGraphBuilder.installEditScreen(
     onBackClick: () -> Unit
 ) {
     composable(route = FinancialScreens.EDIT.name) {
-        EditScreen(onBackClick = onBackClick)
+        EditRoute(onBackClick = onBackClick)
     }
 }

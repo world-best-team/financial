@@ -9,7 +9,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,9 +22,9 @@ private val TOP_BAR_SIZE = 56.dp
 
 @Composable
 internal fun EditTopBar(
-    modifier: Modifier = Modifier,
+    onBackClick: () -> Unit = {},
     contentColor: Color = Color.White, // TODO theme
-    onNavigationClick: () -> Unit = {}
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier
@@ -34,7 +33,7 @@ internal fun EditTopBar(
             .background(contentColor)
     ) {
         IconButton(
-            onClick = onNavigationClick,
+            onClick = onBackClick,
             modifier = Modifier.size(48.dp)
                 .align(Alignment.CenterStart)
         ) {
