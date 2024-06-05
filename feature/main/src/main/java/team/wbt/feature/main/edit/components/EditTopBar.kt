@@ -22,7 +22,7 @@ private val ICON_SIZE = 24.dp
 private val TOP_BAR_SIZE = 56.dp
 
 @Composable
-fun EditTopBar(
+internal fun EditTopBar(
     modifier: Modifier = Modifier,
     contentColor: Color = Color.White, // TODO theme
     onNavigationClick: () -> Unit = {}

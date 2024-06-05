@@ -1,4 +1,5 @@
 package team.wbt.feature.main.edit
 
-class EditViewModel {
-}
+import androidx.lifecycle.ViewModel
+
+class EditViewModel : ViewModel()

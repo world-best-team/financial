@@ -1,9 +1,6 @@
 package team.wbt.feature.main.edit
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,20 +13,12 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,17 +26,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import team.wbt.feature.main.R
+import team.wbt.feature.main.edit.components.CategoryType
+import team.wbt.feature.main.edit.components.EditCategoryCard
+import team.wbt.feature.main.edit.components.EditDetailOption
+import team.wbt.feature.main.edit.components.EditItem
+import team.wbt.feature.main.edit.components.EditToggleSwitch
 import team.wbt.feature.main.edit.components.EditTopBar
 import team.wbt.feature.main.edit.model.EditUiModel
+import team.wbt.feature.main.edit.model.Transaction
 
 
 private val BORDER_SIZE = 1.dp
-private val EDIT_HEIGHT_SIZE = 60.dp
 
 @Composable
 fun EditScreen() {
@@ -130,7 +123,6 @@ private fun EditListScreen(
             .background(Color.White)
             .padding(16.dp)
     ) {
-        val current = CategoryType.INCOME
         EditItem(
             title = stringResource(id = R.string.EDIT_TYPE),
             content = {
@@ -139,13 +131,15 @@ private fun EditListScreen(
                 ) {
                     EditCategoryCard(
                         editType = CategoryType.INCOME,
-                        isSelected = true
+                        isSelected = editItem.type is Transaction.Income
                     )
                     EditCategoryCard(
                         editType = CategoryType.EXPENSE,
+                        isSelected = editItem.type is Transaction.Expense
                     )
                     EditCategoryCard(
                         editType = CategoryType.TRANSFER,
+                        isSelected = editItem.type is Transaction.Transfer
                     )
                 }
             }
@@ -182,16 +176,16 @@ private fun EditListScreen(
         )
         EditItem(
             title = stringResource(
-                id = when (current) {
-                    CategoryType.INCOME -> {
+                id = when (editItem.type) {
+                    is Transaction.Income -> {
                         R.string.EDIT_INCOME_ACCOUNT
                     }
 
-                    CategoryType.EXPENSE -> {
+                    is Transaction.Expense -> {
                         R.string.EDIT_EXPENSE_ACCOUNT
                     }
 
-                    else -> {
+                    is Transaction.Transfer -> {
                         R.string.EDIT_TRANSFER_ACCOUNT
                     }
                 }
@@ -230,7 +224,7 @@ private fun EditListScreen(
                 .fillMaxWidth()
                 .background(color = Color.Gray.copy(alpha = 0.8f))
         )
-        if (current == CategoryType.EXPENSE) {
+        if (editItem.type is Transaction.Expense) {
             EditItem(
                 title = stringResource(id = R.string.EDIT_EXCLUDE_BUDGET),
                 content = {
@@ -244,165 +238,5 @@ private fun EditListScreen(
                     .background(color = Color.Gray.copy(alpha = 0.8f))
             )
         }
-    }
-}
-
-@Composable
-private fun EditItem(
-    modifier: Modifier = Modifier,
-    title: String = "",
-    content: @Composable () -> Unit = {},
-) {
-    Row(
-        modifier = Modifier
-            .height(EDIT_HEIGHT_SIZE)
-            .fillMaxWidth()
-            .background(color = Color.White),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Start
-    ) {
-        Text(
-            text = title,
-            color = Color.Gray,
-            modifier = modifier.width(100.dp)
-        )
-        content()
-    }
-}
-
-enum class CategoryType {
-    INCOME,
-    EXPENSE,
-    TRANSFER
-}
-
-@Composable
-private fun EditCategoryCard(
-    editType: CategoryType,
-    isSelected: Boolean = false,
-    modifier: Modifier = Modifier,
-) {
-    Card(
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        ),
-        modifier = modifier
-            .width(60.dp)
-            .border(
-                BorderStroke(
-                    width = 1.dp,
-                    color = if (isSelected) {
-                        when (editType) {
-                            CategoryType.INCOME -> {
-                                Color.Cyan
-                            }
-
-                            CategoryType.EXPENSE -> {
-                                Color.Blue
-                            }
-
-                            else -> {
-                                Color.White
-                            }
-                        }
-                    } else Color.Gray
-                ),
-                shape = RoundedCornerShape(4.dp)
-            )
-            .padding(
-                start = 12.dp,
-                end = 12.dp,
-                top = 8.dp,
-                bottom = 8.dp
-            )
-            .clickable {
-
-            }
-    ) {
-        Text(
-            text = stringResource(
-                id = when (editType) {
-                    CategoryType.INCOME -> {
-                        R.string.EDIT_TYPE_INCOME
-                    }
-
-                    CategoryType.EXPENSE -> {
-                        R.string.EDIT_TYPE_EXPENSE
-                    }
-
-                    CategoryType.TRANSFER -> {
-                        R.string.EDIT_TYPE_TRANSFER
-                    }
-                }
-            ),
-            textAlign = TextAlign.Center,
-            color = if (isSelected) {
-                when (editType) {
-                    CategoryType.INCOME -> {
-                        Color.Cyan
-                    }
-
-                    CategoryType.EXPENSE -> {
-                        Color.Blue
-                    }
-
-                    else -> {
-                        Color.White
-                    }
-                }
-            } else Color.Gray
-        )
-    }
-}
-
-@Composable
-fun EditDetailOption(
-    title: String,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit = {},
-) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = title,
-            color = Color.Gray
-        )
-        Spacer(modifier = Modifier.weight(1f))
-        IconButton(
-            onClick = { onClick() },
-            modifier = Modifier.size(24.dp)
-        ) {
-            Icon(
-                modifier = Modifier.size(12.dp),
-                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                contentDescription = null
-            )
-        }
-    }
-}
-
-@Composable
-fun EditToggleSwitch(
-    isSelected: Boolean = false,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Spacer(modifier = Modifier.weight(1f))
-        Switch(
-            checked = isSelected,
-            onCheckedChange = {},
-            colors = SwitchDefaults.colors(
-                checkedThumbColor = MaterialTheme.colorScheme.primary,
-                checkedTrackColor = MaterialTheme.colorScheme.primaryContainer,
-                uncheckedThumbColor = MaterialTheme.colorScheme.secondary,
-                uncheckedTrackColor = MaterialTheme.colorScheme.secondaryContainer,
-            )
-        )
     }
 }
