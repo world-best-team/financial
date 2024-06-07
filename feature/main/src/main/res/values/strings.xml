@@ -7,7 +7,7 @@
     <string name="EDIT_CATEGORY">카테고리</string>
     <string name="EDIT_CATEGORY_DEFAULT">미분류</string>
     <string name="EDIT_COUNTERPART">거래처</string>
-    <string name="EDIT_INCOME_ACCOUNT">입금 결제</string>
+    <string name="EDIT_INCOME_ACCOUNT">입금 계좌</string>
     <string name="EDIT_EXPENSE_ACCOUNT">결제 수단</string>
     <string name="EDIT_TRANSFER_ACCOUNT">계좌</string>
     <string name="EDIT_DATE">날짜</string>

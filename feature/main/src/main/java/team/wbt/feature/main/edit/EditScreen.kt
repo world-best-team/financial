@@ -2,9 +2,11 @@ package team.wbt.feature.main.edit
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -12,11 +14,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,6 +30,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import team.wbt.feature.main.R
 import team.wbt.feature.main.edit.components.EditCategoryButtonList
 import team.wbt.feature.main.edit.components.EditDetailOption
@@ -33,49 +38,69 @@ import team.wbt.feature.main.edit.components.EditItem
 import team.wbt.feature.main.edit.components.EditToggleSwitch
 import team.wbt.feature.main.edit.components.EditTopBar
 import team.wbt.feature.main.edit.model.EditContract
-import team.wbt.feature.main.edit.model.EditUiModel
+import team.wbt.feature.main.edit.model.EditModel
 import team.wbt.feature.main.edit.model.Transaction
 
 
 private val BORDER_SIZE = 1.dp
-private lateinit var backPressed: () -> Unit
 
 @Composable
 fun EditRoute(
     onBackClick: () -> Unit,
-) {
-    backPressed = onBackClick
-    EditScreen()
-}
-
-@Composable
-internal fun EditScreen(
     viewModel: EditViewModel = hiltViewModel(),
 ) {
+    val editState by viewModel.state.collectAsStateWithLifecycle(
+        // lifecycle 2.8.0 버전 이슈
+        // https://daengdaeng.medium.com/compositionlocal-locallifecycleowner-not-present-a83c874c28e0
+        lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+    )
+
     LaunchedEffect(true) {
         viewModel.effect.collect(::handleSideEffect)
     }
 
-    Column(
-        modifier = Modifier
-    ) {
-        EditTopBar(onBackClick = { viewModel.setEvent(EditContract.EditEvent.OnBackPressed) })
-        EditTopDetail()
-        Spacer(modifier = Modifier.height(10.dp))
-        EditListScreen()
-    }
+    EditScreen(
+        editState = editState,
+        onBackClick = onBackClick
+    )
 }
 
-private fun handleSideEffect(sideEffect: EditContract.EditSideEffect) {
-    when (sideEffect) {
-        is EditContract.EditSideEffect.NavigateUp -> {
-            (::backPressed.isInitialized).takeIf { it }?.let { backPressed() }
+@Composable
+internal fun EditScreen(
+    editState: EditContract.EditViewState,
+    onBackClick: () -> Unit
+) {
+    when (editState) {
+        EditContract.EditViewState.Loading -> {
+            EditLoading()
+        }
+        is EditContract.EditViewState.Success -> {
+            Column(
+                modifier = Modifier
+            ) {
+                EditTopBar(onBackClick = onBackClick)
+                EditTopDetail(
+                    title = editState.editItem.title,
+                    amount = editState.editItem.amount
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                EditListScreen(editItem = editState.editItem)
+            }
         }
     }
 }
 
 @Composable
+private fun EditLoading() {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        CircularProgressIndicator()
+    }
+}
+
+@Composable
 private fun EditTopDetail(
+    title: String,
+    amount: String,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -88,14 +113,14 @@ private fun EditTopDetail(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
-            text = "라온 약국",
+            text = title,
             fontSize = 18.sp
         )
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "10000원",
+                text = amount,
                 fontWeight = FontWeight.Bold,
                 fontSize = 36.sp
             )
@@ -112,7 +137,7 @@ private fun EditTopDetail(
             }
         }
         Text(
-            text = "명세서 | 인식금액 10,000원",
+            text = "명세서 | 인식금액 ${amount}원",
             textDecoration = TextDecoration.Underline,
             color = Color.Gray.copy(alpha = 0.5f)
         )
@@ -122,7 +147,7 @@ private fun EditTopDetail(
 @Composable
 private fun EditListScreen(
     modifier: Modifier = Modifier,
-    editItem: EditUiModel = EditUiModel(),
+    editItem: EditModel,
 ) {
     Column(
         modifier = modifier
@@ -148,7 +173,7 @@ private fun EditListScreen(
         EditItem(
             title = stringResource(id = R.string.EDIT_CATEGORY),
             content = {
-                EditDetailOption(title = "미분류")
+                EditDetailOption(title = editItem.category)
             }
         )
         Spacer(
@@ -160,7 +185,7 @@ private fun EditListScreen(
         EditItem(
             title = stringResource(id = R.string.EDIT_COUNTERPART),
             content = {
-                EditDetailOption(title = "라온약국")
+                EditDetailOption(title = editItem.title)
             }
         )
         Spacer(
@@ -175,18 +200,16 @@ private fun EditListScreen(
                     is Transaction.Income -> {
                         R.string.EDIT_INCOME_ACCOUNT
                     }
-
                     is Transaction.Expense -> {
                         R.string.EDIT_EXPENSE_ACCOUNT
                     }
-
                     is Transaction.Transfer -> {
                         R.string.EDIT_TRANSFER_ACCOUNT
                     }
                 }
             ),
             content = {
-                EditDetailOption(title = "체크카드")
+                EditDetailOption(title = editItem.paymentMethod)
             }
         )
         Spacer(
@@ -198,7 +221,7 @@ private fun EditListScreen(
         EditItem(
             title = stringResource(id = R.string.EDIT_DATE),
             content = {
-                EditDetailOption(title = "2024년 6월 4일")
+                EditDetailOption(title = editItem.dateToString())
             }
         )
         Spacer(
@@ -210,7 +233,7 @@ private fun EditListScreen(
         EditItem(
             title = stringResource(id = R.string.EDIT_MEMO),
             content = {
-                EditDetailOption(title = "입력하세요")
+                EditDetailOption(title = editItem.memo)
             }
         )
         Spacer(
@@ -233,5 +256,11 @@ private fun EditListScreen(
                     .background(color = Color.Gray.copy(alpha = 0.8f))
             )
         }
+    }
+}
+
+private fun handleSideEffect(sideEffect: EditContract.EditSideEffect) {
+    when (sideEffect) {
+        else -> {}
     }
 }

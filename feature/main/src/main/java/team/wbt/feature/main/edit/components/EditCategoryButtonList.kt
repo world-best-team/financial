@@ -17,16 +17,16 @@ fun EditCategoryButtonList(
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         EditCategoryCard(
-            editType = CategoryType.INCOME,
+            editType = Transaction.Income,
             isSelected = currentType is Transaction.Income
         )
         EditCategoryCard(
-            editType = CategoryType.EXPENSE,
-            isSelected = currentType is Transaction.Expense
+            editType = Transaction.Transfer,
+            isSelected = currentType is Transaction.Transfer
         )
         EditCategoryCard(
-            editType = CategoryType.TRANSFER,
-            isSelected = currentType is Transaction.Transfer
+            editType = Transaction.Expense(),
+            isSelected = currentType is Transaction.Expense
         )
     }
 }

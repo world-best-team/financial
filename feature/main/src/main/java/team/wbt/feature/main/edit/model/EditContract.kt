@@ -2,16 +2,21 @@ package team.wbt.feature.main.edit.model
 
 import team.wbt.feature.main.base.Event
 import team.wbt.feature.main.base.SideEffect
+import team.wbt.feature.main.base.ViewState
 
 sealed class EditContract {
 
     // TODO viewState
-
-    sealed class EditEvent: Event {
-        data object OnBackPressed: EditEvent()
+    sealed interface EditViewState: ViewState {
+        data object Loading: EditViewState
+        data class Success(
+            val editItem: EditModel
+        ): EditViewState
     }
 
-    sealed class EditSideEffect: SideEffect {
-        data object NavigateUp: EditSideEffect()
+    sealed interface EditEvent: Event {
+    }
+
+    sealed interface EditSideEffect: SideEffect {
     }
 }

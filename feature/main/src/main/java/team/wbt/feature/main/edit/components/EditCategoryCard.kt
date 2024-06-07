@@ -16,16 +16,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import team.wbt.feature.main.R
-
-internal enum class CategoryType {
-    INCOME,
-    EXPENSE,
-    TRANSFER
-}
+import team.wbt.feature.main.edit.model.Transaction
 
 @Composable
 internal fun EditCategoryCard(
-    editType: CategoryType,
+    editType: Transaction,
     isSelected: Boolean = false,
     modifier: Modifier = Modifier,
 ) {
@@ -40,14 +35,12 @@ internal fun EditCategoryCard(
                     width = 1.dp,
                     color = if (isSelected) {
                         when (editType) {
-                            CategoryType.INCOME -> {
+                            is Transaction.Income -> {
                                 Color.Cyan
                             }
-
-                            CategoryType.EXPENSE -> {
+                            is Transaction.Expense -> {
                                 Color.Blue
                             }
-
                             else -> {
                                 Color.White
                             }
@@ -69,15 +62,13 @@ internal fun EditCategoryCard(
         Text(
             text = stringResource(
                 id = when (editType) {
-                    CategoryType.INCOME -> {
+                    is Transaction.Income -> {
                         R.string.EDIT_TYPE_INCOME
                     }
-
-                    CategoryType.EXPENSE -> {
+                    is Transaction.Expense -> {
                         R.string.EDIT_TYPE_EXPENSE
                     }
-
-                    CategoryType.TRANSFER -> {
+                    is Transaction.Transfer-> {
                         R.string.EDIT_TYPE_TRANSFER
                     }
                 }
@@ -85,14 +76,12 @@ internal fun EditCategoryCard(
             textAlign = TextAlign.Center,
             color = if (isSelected) {
                 when (editType) {
-                    CategoryType.INCOME -> {
+                    is Transaction.Income -> {
                         Color.Cyan
                     }
-
-                    CategoryType.EXPENSE -> {
+                    is Transaction.Expense -> {
                         Color.Blue
                     }
-
                     else -> {
                         Color.White
                     }
