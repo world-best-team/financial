@@ -381,4 +381,8 @@ hs_err_pid*
 
 !/gradle/wrapper/gradle-wrapper.jar
 
+# kotlin
+.kotlin
+.kotlin/
+
 # End of https://www.toptal.com/developers/gitignore/api/intellij+all,intellij,intellij+iml,android,androidstudio
