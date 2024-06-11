@@ -21,6 +21,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,14 +34,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.flow.collectLatest
 import team.wbt.feature.main.R
 import team.wbt.feature.main.edit.components.EditCategoryButtonList
 import team.wbt.feature.main.edit.components.EditDetailOption
 import team.wbt.feature.main.edit.components.EditItem
 import team.wbt.feature.main.edit.components.EditToggleSwitch
 import team.wbt.feature.main.edit.components.EditTopBar
-import team.wbt.feature.main.edit.model.EditContract
+import team.wbt.feature.main.edit.components.dialog.CategoryBottomSheet
+import team.wbt.feature.main.edit.model.EditEvent
 import team.wbt.feature.main.edit.model.EditModel
+import team.wbt.feature.main.edit.model.EditSideEffect
+import team.wbt.feature.main.edit.model.EditViewState
 import team.wbt.feature.main.edit.model.Transaction
 
 
@@ -55,26 +62,47 @@ fun EditRoute(
         lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
     )
 
+    var showCategoryBottomSheet by remember { mutableStateOf(false) }
+
     LaunchedEffect(true) {
-        viewModel.effect.collect(::handleSideEffect)
+        viewModel.effect.collectLatest { sideEffect ->
+            when (sideEffect) {
+                is EditSideEffect.ShowCategory -> {
+                    showCategoryBottomSheet = true
+                }
+            }
+        }
+    }
+
+    if (showCategoryBottomSheet) {
+        CategoryBottomSheet(
+            onDismiss = { showCategoryBottomSheet = false },
+            onClick = {
+                viewModel.setEvent(EditEvent.EditCategory(it))
+                showCategoryBottomSheet = false
+            }
+        )
     }
 
     EditScreen(
         editState = editState,
-        onBackClick = onBackClick
+        onBackClick = onBackClick,
+        onEffect = viewModel::setEvent,
     )
 }
 
 @Composable
 internal fun EditScreen(
-    editState: EditContract.EditViewState,
-    onBackClick: () -> Unit
+    editState: EditViewState,
+    onBackClick: () -> Unit,
+    onEffect: (EditEvent) -> Unit,
 ) {
     when (editState) {
-        EditContract.EditViewState.Loading -> {
+        is EditViewState.Loading -> {
             EditLoading()
         }
-        is EditContract.EditViewState.Success -> {
+
+        is EditViewState.Success -> {
             Column(
                 modifier = Modifier
             ) {
@@ -84,7 +112,12 @@ internal fun EditScreen(
                     amount = editState.editItem.amount
                 )
                 Spacer(modifier = Modifier.height(10.dp))
-                EditListScreen(editItem = editState.editItem)
+                EditListScreen(
+                    editItem = editState.editItem,
+                    showCategoryBottomSheet = { onEffect(EditEvent.ShowCategory) },
+                    showShowPaymentMethodBottomSheet = { onEffect(EditEvent.ShowPaymentMethod) },
+                    showDatePickerBottomSheet = { onEffect(EditEvent.ShowDatePicker) },
+                )
             }
         }
     }
@@ -148,6 +181,9 @@ private fun EditTopDetail(
 private fun EditListScreen(
     modifier: Modifier = Modifier,
     editItem: EditModel,
+    showCategoryBottomSheet: () -> Unit,
+    showShowPaymentMethodBottomSheet: () -> Unit,
+    showDatePickerBottomSheet: () -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -173,7 +209,10 @@ private fun EditListScreen(
         EditItem(
             title = stringResource(id = R.string.EDIT_CATEGORY),
             content = {
-                EditDetailOption(title = editItem.category)
+                EditDetailOption(
+                    title = editItem.category,
+                    onClick = showCategoryBottomSheet
+                )
             }
         )
         Spacer(
@@ -200,16 +239,21 @@ private fun EditListScreen(
                     is Transaction.Income -> {
                         R.string.EDIT_INCOME_ACCOUNT
                     }
+
                     is Transaction.Expense -> {
                         R.string.EDIT_EXPENSE_ACCOUNT
                     }
+
                     is Transaction.Transfer -> {
                         R.string.EDIT_TRANSFER_ACCOUNT
                     }
                 }
             ),
             content = {
-                EditDetailOption(title = editItem.paymentMethod)
+                EditDetailOption(
+                    title = editItem.paymentMethod,
+                    onClick = showShowPaymentMethodBottomSheet
+                )
             }
         )
         Spacer(
@@ -221,7 +265,10 @@ private fun EditListScreen(
         EditItem(
             title = stringResource(id = R.string.EDIT_DATE),
             content = {
-                EditDetailOption(title = editItem.dateToString())
+                EditDetailOption(
+                    title = editItem.dateToString(),
+                    onClick = showDatePickerBottomSheet
+                )
             }
         )
         Spacer(
@@ -256,11 +303,5 @@ private fun EditListScreen(
                     .background(color = Color.Gray.copy(alpha = 0.8f))
             )
         }
-    }
-}
-
-private fun handleSideEffect(sideEffect: EditContract.EditSideEffect) {
-    when (sideEffect) {
-        else -> {}
     }
 }

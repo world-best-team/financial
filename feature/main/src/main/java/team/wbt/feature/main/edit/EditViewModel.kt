@@ -11,8 +11,10 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import team.wbt.feature.main.edit.model.EditContract
+import team.wbt.feature.main.edit.model.EditEvent
 import team.wbt.feature.main.edit.model.EditModel
+import team.wbt.feature.main.edit.model.EditSideEffect
+import team.wbt.feature.main.edit.model.EditViewState
 import team.wbt.feature.main.edit.model.Transaction
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -23,13 +25,13 @@ import javax.inject.Inject
 class EditViewModel @Inject constructor(
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow<EditContract.EditViewState>(EditContract.EditViewState.Loading)
+    private val _state = MutableStateFlow<EditViewState>(EditViewState.Loading)
     val state get() = _state.asStateFlow()
 
-    private val _event = MutableSharedFlow<EditContract.EditEvent>()
+    private val _event = MutableSharedFlow<EditEvent>()
     val event get() = _event.asSharedFlow()
 
-    private val _effect = Channel<EditContract.EditSideEffect>()
+    private val _effect = Channel<EditSideEffect>()
     val effect get() = _effect.receiveAsFlow()
 
     init {
@@ -43,10 +45,10 @@ class EditViewModel @Inject constructor(
 
     fun createItem() {
         viewModelScope.launch {
-            setState(EditContract.EditViewState.Loading)
+            setState(EditViewState.Loading)
             delay(1_000L)
             setState(
-                EditContract.EditViewState.Success(
+                EditViewState.Success(
                     editItem = EditModel(
                         title = "라온 약국",
                         amount = "10000",
@@ -62,21 +64,40 @@ class EditViewModel @Inject constructor(
         }
     }
 
-    private fun setState(state: EditContract.EditViewState) {
+    private fun setState(state: EditViewState) {
         _state.value = state
     }
 
-    private fun handleEvent(event: EditContract.EditEvent) {
+    private fun handleEvent(event: EditEvent) {
         viewModelScope.launch {
             when (event) {
+                is EditEvent.ShowCategory -> {
+                    setEffect(EditSideEffect.ShowCategory)
+                }
+                is EditEvent.EditCategory -> {
+                    val curr = (state.value as EditViewState.Success).editItem
+                    setState(
+                        EditViewState.Success(
+                            editItem = curr.copy(
+                                category = event.categoryModel?.let { it.name } ?: curr.category
+                            )
+                        )
+                    )
+                }
                 else -> {}
             }
         }
     }
 
-    fun setEvent(event: EditContract.EditEvent) {
+    fun setEvent(event: EditEvent) {
         viewModelScope.launch {
             _event.emit(event)
+        }
+    }
+
+    fun setEffect(effect : EditSideEffect){
+        viewModelScope.launch {
+            _effect.send(effect)
         }
     }
 }
