@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="EDIT_TYPE">분류</string>
+    <string name="EDIT_TYPE_INCOME">수입</string>
+    <string name="EDIT_TYPE_EXPENSE">지출</string>
+    <string name="EDIT_TYPE_TRANSFER">이체</string>
+    <string name="EDIT_CATEGORY">카테고리</string>
+    <string name="EDIT_CATEGORY_DEFAULT">미분류</string>
+    <string name="EDIT_COUNTERPART">거래처</string>
+    <string name="EDIT_INCOME_ACCOUNT">입금 계좌</string>
+    <string name="EDIT_EXPENSE_ACCOUNT">결제 수단</string>
+    <string name="EDIT_TRANSFER_ACCOUNT">계좌</string>
+    <string name="EDIT_DATE">날짜</string>
+    <string name="EDIT_MEMO">메모·태그</string>
+    <string name="EDIT_EXCLUDE_BUDGET">예산에서 제외</string>
+    <string name="EDIT">편집</string>
+</resources>
